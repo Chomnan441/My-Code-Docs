@@ -30,10 +30,13 @@ npm run docs:dev
 
 ```text
 docs/
-  index.md                 หน้าแรก
-  markdown-examples.md     ตัวอย่าง Markdown
-  api-examples.md          ตัวอย่าง Runtime API
-  .vitepress/config.mts    การตั้งค่าเว็บไซต์
+  index.md                     หน้าแรก
+  projects/                    เอกสารโปรเจค
+  fundamentals/                พื้นฐานการเขียนโปรแกรม
+  notes/                       บันทึกการเรียนรู้
+  .vitepress/config.mts        การตั้งค่าเว็บไซต์
+templates/
+  code-explanation.md          โครงสำหรับเขียนบทเรียนอธิบายโค้ด
 ```
 
 หน้าเอกสารอยู่ในโฟลเดอร์ `docs/` การตั้งค่าชื่อเว็บ เมนู และแถบด้านข้างอยู่ใน `docs/.vitepress/config.mts`
