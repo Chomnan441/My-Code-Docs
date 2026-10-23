@@ -1,32 +1,45 @@
 ---
 title: Backend
-description: โครงบทเรียนสำหรับอ่านโค้ด Go ของ Job Application Tracker
+description: สำรวจโครงสร้าง Go HTTP Server และ REST API Endpoint ฝั่ง Backend
 outline: [2, 3]
 ---
 
 # Backend
 
-หน้านี้จะเก็บคำอธิบายโค้ดฝั่งเซิร์ฟเวอร์ ของ Job Application Tracker เทคโนโลยีที่ใช้คือ Go และเฟรมเวิร์ก Gin
+เซิร์ฟเวอร์ของโปรเจคเขียนด้วย Go และใช้แพ็กเกจมาตรฐาน `net/http` เปิด HTTP server พร้อมเส้นทาง REST API
 
-::: info โครงบทเรียน
-ยังไม่มีไฟล์ Go จากโปรเจคนี้ให้วิเคราะห์ ยังไม่บันทึกเส้นทาง API โครงสร้าง handler หรือวิธีเชื่อมต่อฐานข้อมูล
+## เซิร์ฟเวอร์เริ่มทำงานที่ไฟล์ใด
+
+`backend/cmd/server/main.go` เป็นจุดเริ่ม ฟังก์ชัน `main()` เรียก `server.NewServer()` จากแพ็กเกจ `job-application-tracker/backend/internal/server` แล้วเปิดรับคำขอด้วย `http.ListenAndServe(":8080", srv.Mux())`
+
+## เส้นทางที่เปิดให้เรียก
+
+| เมธอด | Path | Handler | หน้าที่ |
+| --- | --- | --- | --- |
+| `GET` | `/health` | `healthHandler` | ตรวจว่าเซิร์ฟเวอร์พร้อมทำงาน |
+
+`GET /health` ไม่ต้องส่ง query หรือ body ตอบ `200 OK` พร้อมหัวข้อ `Content-Type: application/json` และเนื้อหาด้านล่าง
+
+```json
+{
+  "status": "ok"
+}
+```
+
+## จุดที่คุยกับฐานข้อมูล
+
+::: info ผลการตรวจซอร์สโค้ด
+ใน `backend/cmd/server/main.go` และ `backend/internal/server/server.go` ยังไม่พบการเชื่อมต่อฐานข้อมูลหรือชั้น repository
 :::
 
-## หน้านี้จะตอบอะไร เมื่อมีซอร์สโค้ดแล้ว
+## บทเรียนในส่วนนี้
 
-- เซิร์ฟเวอร์เริ่มทำงานจากไฟล์ใด
-- มีเส้นทางให้ Frontend เรียกอะไรบ้าง
-- แต่ละเส้นทางรับข้อมูลแบบใด และตอบกลับแบบใด
-- จุดใดส่งคำสั่งต่อไปยัง PostgreSQL
+- [Go HTTP Server และ Health Check](/projects/job-application-tracker/backend/health-check-server)
 
-## สิ่งที่ควรอ่านคู่กัน
+## อ่านต่อ
 
-ถ้าเพิ่งเริ่มอ่านภาษา Go ให้เปิด [Go Basics](/fundamentals/go/) ก่อน แล้วอ่าน [REST API](/fundamentals/rest-api) เพื่อรู้ว่าคำขอจากหน้าเว็บมาถึงเซิร์ฟเวอร์อย่างไร
-
-เมื่อเจอโค้ดจริง ให้ใช้เทมเพลต `templates/code-explanation.md` แล้วเขียนบทเรียนทีละไฟล์หรือทีละฟังก์ชัน
-
-## หน้าถัดไปในโปรเจค
-
-- [Database](/projects/job-application-tracker/database/)
-- [Frontend](/projects/job-application-tracker/frontend/)
 - [ภาพรวมโปรเจค](/projects/job-application-tracker/)
+- [Frontend](/projects/job-application-tracker/frontend/)
+- [การทำงานร่วมกันของระบบ](/projects/job-application-tracker/architecture)
+- [Go Basics](/fundamentals/go/)
+- [REST API](/fundamentals/rest-api)

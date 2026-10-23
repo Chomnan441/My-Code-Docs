@@ -17,9 +17,9 @@ hero:
 # เพิ่มบทเรียนล่าสุดโดยใส่รายการใหม่ใต้ recent
 projects:
   - title: "Job Application Tracker"
-    kicker: "React · Go (Gin) · PostgreSQL"
-    description: "โปรเจคแรกในคลังนี้ ใช้ฝึกอ่านโค้ดฝั่งหน้าเว็บ ฝั่งเซิร์ฟเวอร์ และฐานข้อมูล รายละเอียดจากซอร์สโค้ดจะถูกเติมภายหลัง"
-    status: "โครงบทเรียน"
+    kicker: "React · TypeScript · Go"
+    description: "ระบบติดตามและบันทึกสถานะการสมัครงาน พัฒนาด้วย React, Tailwind CSS และ Go HTTP Server"
+    status: "อ่านจากซอร์สโค้ดแล้ว"
     link: "/projects/job-application-tracker/"
 
 fundamentals:
@@ -51,18 +51,15 @@ notes:
     link: "/notes/glossary"
 
 recent:
-  - title: "ภาพรวม Job Application Tracker"
-    detail: "โครงของโปรเจคแรก ยังไม่ลงรายละเอียดซอร์สโค้ด"
-    link: "/projects/job-application-tracker/"
-  - title: "Frontend"
-    detail: "รอเติมหลังจากอ่านโค้ด React ของโปรเจค"
-    link: "/projects/job-application-tracker/frontend/"
-  - title: "Backend"
-    detail: "รอเติมหลังจากอ่านโค้ด Go ของโปรเจค"
-    link: "/projects/job-application-tracker/backend/"
-  - title: "Database"
-    detail: "รอเติมหลังจากอ่านโครงสร้าง PostgreSQL ของโปรเจค"
-    link: "/projects/job-application-tracker/database/"
+  - title: "ฟอร์มบันทึกการสมัครงานใหม่"
+    detail: "การจัดการ state ของฟอร์ม การตรวจข้อมูล และการอัปเดตรายการบนหน้าเว็บ"
+    link: "/projects/job-application-tracker/frontend/add-application-dialog"
+  - title: "การกรองข้อมูลรายการสมัครงาน"
+    detail: "การใช้ useMemo กรองรายการตามคำค้นหาและสถานะในหน้า Applications"
+    link: "/projects/job-application-tracker/frontend/applications-state-and-filtering"
+  - title: "Go HTTP Server และ Health Check"
+    detail: "โครงสร้างเซิร์ฟเวอร์ด้วย net/http และเส้นทาง GET /health"
+    link: "/projects/job-application-tracker/backend/health-check-server"
 ---
 
 <script setup>

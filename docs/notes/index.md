@@ -10,15 +10,19 @@ outline: [2, 3]
 
 ## สิ่งที่เรียนรู้ {#learned}
 
-ยังอยู่ระหว่างเริ่มคลังนี้ เรื่องที่ตั้งใจกลับมาอ่านซ้ำในตอนนี้คือพื้นฐาน ไม่ใช่บทสรุปจากซอร์สโค้ดของโปรเจค
+เรื่องจากซอร์สโค้ดของ Job Application Tracker
+
+- [การกรองข้อมูลรายการสมัครงาน](/projects/job-application-tracker/frontend/applications-state-and-filtering) state ของหน้า Applications และการกรองด้วย `useMemo`
+- [ฟอร์มบันทึกการสมัครงานใหม่](/projects/job-application-tracker/frontend/add-application-dialog) ฟอร์มที่ผูกกับ state และการตรวจข้อมูลก่อนบันทึก
+- [Go HTTP Server และ Health Check](/projects/job-application-tracker/backend/health-check-server) เซิร์ฟเวอร์ด้วย `net/http` และเส้นทาง `GET /health`
+
+พื้นฐานที่ยังใช้ประกอบตอนเปิดไฟล์
 
 - [Go Basics](/fundamentals/go/) โครง `package`, `func` และตัวแปร
 - [React Basics](/fundamentals/react/) คอมโพเนนต์, JSX และ props
 - [REST API](/fundamentals/rest-api) เมธอด HTTP กับ JSON
 - [SQL & PostgreSQL](/fundamentals/postgresql) ตารางกับ `SELECT` และ `INSERT`
 - [Git & GitHub](/fundamentals/git-github) commit และ push
-
-เมื่ออ่าน Job Application Tracker จากไฟล์จริงแล้ว ให้เพิ่มประเด็นใหม่ใต้รายการนี้ พร้อมลิงก์ไปบทเรียนที่อธิบายไฟล์นั้น
 
 ## เพิ่มบทเรียนใหม่
 

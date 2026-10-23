@@ -1,32 +1,52 @@
 ---
 title: Database
-description: โครงบทเรียนสำหรับอ่านฐานข้อมูลของ Job Application Tracker
+description: สรุปสถานะการจัดเก็บข้อมูลและโครงสร้าง Data Models ในโปรเจค Job Application Tracker
 outline: [2, 3]
 ---
 
 # Database
 
-หน้านี้จะเก็บคำอธิบายฐานข้อมูลของ Job Application Tracker เทคโนโลยีที่ใช้คือ PostgreSQL
+## สถานะระบบฐานข้อมูล
 
-::: info โครงบทเรียน
-ยังไม่มีสคีมาหรือไฟล์ SQL จากโปรเจคนี้ ยังไม่บันทึกชื่อตาราง คอลัมน์ หรือความสัมพันธ์ระหว่างตาราง
+::: warning ตรวจแล้วไม่พบฐานข้อมูลภายนอก
+ทั้ง Backend (`backend/go.mod`, `backend/internal/server/server.go`) และ Frontend ไม่พบการเชื่อมต่อฐานข้อมูลภายนอก เช่น PostgreSQL หรือ MongoDB
 :::
 
-## หน้านี้จะตอบอะไร เมื่อมีซอร์สโค้ดแล้ว
+## โครงสร้างข้อมูลที่ใช้จริงในตอนนี้
 
-- มีตารางอะไรบ้าง และแต่ละตารางเก็บอะไร
-- แถวหนึ่งแถวแทนสิ่งใดในการสมัครงาน
-- Backend อ่านหรือเขียนตารางนั้นด้วยคำสั่งแบบใด
-- ข้อมูลใดห้ามว่าง และข้อมูลใดอ้างอิงถึงกัน
+ข้อมูลการสมัครงานอยู่ในอ็อบเจกต์ TypeScript บนหน่วยความจำฝั่ง Frontend ชนิดหลักประกาศไว้ใน `frontend/src/lib/types.ts`
 
-## สิ่งที่ควรอ่านคู่กัน
+### ApplicationStatus
 
-ถ้าคำว่าตาราง แถว หรือ `SELECT` ยังใหม่ ให้อ่าน [SQL & PostgreSQL](/fundamentals/postgresql) ก่อน ตัวอย่างในหน้านั้นเป็นตัวอย่างทั่วไป ไม่ใช่โครงสร้างของโปรเจคนี้
+ชนิดนี้ระบุสถานะของการสมัครงานหนึ่งรายการ
 
-เมื่อมีไฟล์ SQL หรือโมเดลจากโค้ดจริงแล้ว ให้คัดลอก `templates/code-explanation.md` มาอธิบายทีละตาราง
+- `'APPLIED'` สมัครงานแล้ว
+- `'INTERVIEWING'` อยู่ระหว่างการสัมภาษณ์
+- `'OFFERED'` ได้รับข้อเสนอเข้าทำงาน
+- `'REJECTED'` ไม่ผ่านการคัดเลือก
+- `'BOOKMARKED'` บันทึกไว้สนใจ
+- `'ARCHIVED'` เก็บเข้าคลัง
 
-## หน้าถัดไปในโปรเจค
+### Application
 
-- [การทำงานร่วมกันของระบบ](/projects/job-application-tracker/architecture)
-- [Backend](/projects/job-application-tracker/backend/)
+หนึ่งค่าแทนการสมัครงานหนึ่งรายการ
+
+| ฟิลด์ | ชนิด | จำเป็น | ความหมาย |
+| --- | --- | --- | --- |
+| `id` | `string` | ใช่ | รหัสอ้างอิงรายการ |
+| `company` | `string` | ใช่ | ชื่อบริษัท |
+| `position` | `string` | ใช่ | ชื่อตำแหน่ง |
+| `status` | `ApplicationStatus` | ใช่ | สถานะปัจจุบัน |
+| `appliedDate` | `string` | ใช่ | วันที่ยื่นสมัคร |
+| `location` | `string` | ไม่ | สถานที่ทำงาน |
+| `salary` | `string` | ไม่ | ช่วงเงินเดือน |
+| `jobUrl` | `string` | ไม่ | ลิงก์ประกาศรับสมัคร |
+| `notes` | `string` | ไม่ | บันทึกเพิ่มเติม |
+
+ข้อมูลตัวอย่างอยู่ในอาร์เรย์ `mockApplications` ที่ `frontend/src/data/mock-applications.ts`
+
+## อ่านต่อ
+
 - [ภาพรวมโปรเจค](/projects/job-application-tracker/)
+- [Frontend](/projects/job-application-tracker/frontend/)
+- [Backend](/projects/job-application-tracker/backend/)

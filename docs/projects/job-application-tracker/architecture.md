@@ -1,37 +1,57 @@
 ---
 title: การทำงานร่วมกันของระบบ
-description: กรอบสำหรับเข้าใจว่า React, Go และ PostgreSQL ส่งงานต่อกันอย่างไร
+description: ทำความเข้าใจเส้นทางการเดินทางของข้อมูลและการทำงานร่วมกันระหว่าง Frontend และ Backend
 outline: [2, 3]
 ---
 
 # การทำงานร่วมกันของระบบ
 
-หน้านี้ใช้ดูว่าสามส่วนของ Job Application Tracker น่าจะส่งงานต่อกันอย่างไรในภาพกว้าง แล้วยึดภาพนี้เป็นรายการคำถามตอนอ่านโค้ดจริง
+หน้านี้อธิบายว่าข้อมูลเดินทางอย่างไรเมื่อผู้ใช้ทำกิจกรรมใน Job Application Tracker
 
-::: info โครงบทเรียน
-ลำดับด้านล่างเป็นกรอบจากเทคโนโลยีที่โปรเจคใช้ ไม่ใช่แผนภาพที่อ่านมาจากซอร์สโค้ด ยังไม่ยืนยันชื่อเส้นทาง API ชื่อตาราง หรือทิศทางของข้อมูลจริง
+## เส้นทางในภาพกว้าง
+
+```text
+[ ผู้ใช้ ]
+     │
+     ▼
+[ React Frontend (App.tsx) ] ── จัดการ state ในเบราว์เซอร์
+     │
+     ├─ สลับหน้าจอ Dashboard หรือ Applications
+     └─ เพิ่มหรือกรองข้อมูล ──► [ mockApplications ในหน่วยความจำ ]
+
+[ ไคลเอ็นต์ ] ── GET /health ──► [ Go Backend ที่พอร์ต 8080 ]
+                                        │
+                                        ▼
+                                 [ healthHandler ]
+                                        │
+                                        ▼
+                                 JSON {"status":"ok"}
+```
+
+## การกรองและเพิ่มรายการสมัครงาน
+
+1. ผู้ใช้เปิดหน้าเว็บ เบราว์เซอร์โหลด React จาก `frontend/src/main.tsx` เข้าสู่ `frontend/src/App.tsx`
+2. ผู้ใช้กดเมนู Applications ที่แถบด้านข้าง สคริปต์เปลี่ยน state `currentView` เป็น `'applications'` แล้วเรนเดอร์ `<ApplicationsPage>`
+3. `ApplicationsPage` อ่านรายการตั้งต้นจาก `mockApplications` ใน `frontend/src/data/mock-applications.ts`
+4. ผู้ใช้พิมพ์ในช่องค้นหา ค่า `searchQuery` เปลี่ยน `useMemo` กรองอาร์เรย์แล้วส่งผลไปเรนเดอร์ใน `<ApplicationTable>` หรือ `<ApplicationCard>`
+5. ผู้ใช้เปิด `<AddApplicationDialog>` กรอกข้อมูลแล้วกดบันทึก ฟังก์ชัน `onAddApplication` นำรายการใหม่ไปต่อท้าย state `applications` ในเบราว์เซอร์
+
+## การตรวจความพร้อมของ Backend
+
+1. ไคลเอ็นต์ส่ง `GET` ไปที่ `http://localhost:8080/health`
+2. เซิร์ฟเวอร์ใน `backend/cmd/server/main.go` รับคำขอที่พอร์ต `:8080`
+3. `http.ServeMux` จับคู่ path `/health` กับ `healthHandler` ใน `backend/internal/server/server.go`
+4. `healthHandler` ตอบสถานะ `200 OK` และ JSON `{"status":"ok"}`
+
+::: info สรุปการเชื่อมโยงในปัจจุบัน
+Frontend กับ Backend ยังทำงานแยกกัน Frontend เก็บข้อมูลใน React state และข้อมูลจำลอง ส่วน Backend เปิด HTTP server และเส้นทางตรวจสุขภาพของเซิร์ฟเวอร์
 :::
 
-## กรอบที่ใช้เรียน
+## อ่านต่อ
 
-1. ผู้ใช้ทำบางอย่างบนหน้าเว็บที่เขียนด้วย React
-2. หน้าเว็บส่งคำขอ HTTP ไปที่ Backend ที่เขียนด้วย Go และ Gin
-3. Backend ประมวลผลคำขอนั้น แล้วอ่านหรือบันทึกข้อมูลใน PostgreSQL
-4. Backend ส่งผลลัพธ์กลับมาเป็นข้อมูลที่หน้าเว็บนำไปแสดง
-
-นี่คือรูปแบบทั่วไปของเว็บที่มี Frontend, Backend และฐานข้อมูลแยกกัน โปรเจคนี้อาจมีรายละเอียดเพิ่ม เช่น การตรวจข้อมูลก่อนบันทึก หรือการแบ่งไฟล์คนละแบบ ซึ่งจะรู้ได้เมื่ออ่านโค้ด
-
-## สิ่งที่ต้องตรวจในซอร์สโค้ดภายหลัง
-
-- เหตุการณ์บนหน้าจอใดทำให้เกิดคำขอ
-- คำขอนั้นใช้เมธอดอะไร และส่ง JSON แบบใด
-- ฟังก์ชันใดใน Go รับคำขอนั้น
-- คำสั่ง SQL ใดทำงานต่อจากฟังก์ชันนั้น
-- หน้าเว็บนำข้อมูลที่ได้รับกลับมาแสดงตรงไหน
-
-## อ่านประกอบ
-
+- [ภาพรวมโปรเจค](/projects/job-application-tracker/)
 - [Frontend](/projects/job-application-tracker/frontend/)
 - [Backend](/projects/job-application-tracker/backend/)
-- [Database](/projects/job-application-tracker/database/)
+- [React Basics](/fundamentals/react/)
+- [Go Basics](/fundamentals/go/)
 - [REST API](/fundamentals/rest-api)

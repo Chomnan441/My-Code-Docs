@@ -25,7 +25,19 @@ export default defineConfig({
             { text: 'โปรเจคทั้งหมด', link: '/projects/' },
             { text: 'ภาพรวมโปรเจค', link: '/projects/job-application-tracker/' },
             { text: 'Frontend', link: '/projects/job-application-tracker/frontend/' },
+            {
+              text: 'ฟอร์มเพิ่มการสมัครงาน',
+              link: '/projects/job-application-tracker/frontend/add-application-dialog'
+            },
+            {
+              text: 'การกรองรายการสมัครงาน',
+              link: '/projects/job-application-tracker/frontend/applications-state-and-filtering'
+            },
             { text: 'Backend', link: '/projects/job-application-tracker/backend/' },
+            {
+              text: 'Go HTTP Server และ Health Check',
+              link: '/projects/job-application-tracker/backend/health-check-server'
+            },
             { text: 'Database', link: '/projects/job-application-tracker/database/' },
             {
               text: 'การทำงานร่วมกันของระบบ',

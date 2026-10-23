@@ -1,32 +1,57 @@
 ---
 title: Frontend
-description: โครงบทเรียนสำหรับอ่านโค้ด React ของ Job Application Tracker
+description: สำรวจโครงสร้างหน้าจอ คอมโพเนนต์หลัก และการจัดการข้อมูลฝั่ง Frontend ในระบบ Job Application Tracker
 outline: [2, 3]
 ---
 
 # Frontend
 
-หน้านี้จะเก็บคำอธิบายโค้ดฝั่งที่ผู้ใช้เห็น ของ Job Application Tracker เทคโนโลยีที่ใช้คือ React
+ส่วนที่ผู้ใช้เห็นของ Job Application Tracker พัฒนาด้วย React 18, TypeScript และ Tailwind CSS คอมโพเนนต์ถูกแยกตามหน้าที่ใช้งาน
 
-::: info โครงบทเรียน
-ยังไม่มีไฟล์ React จากโปรเจคนี้ให้วิเคราะห์ อย่าถือว่ามีคอมโพเนนต์ หน้าจอ หรือการเรียก API ตามที่ยังไม่ได้เขียนไว้
+## แอปเริ่มทำงานที่ไฟล์ใด
+
+1. `frontend/src/main.tsx` เป็นจุดเริ่มของแอป React เรียก `createRoot` เพื่อวางคอมโพเนนต์ `<App />` ลงในองค์ประกอบ `#root` ของ `index.html`
+2. `frontend/src/App.tsx` เป็นคอมโพเนนต์บนสุด เก็บ state สำหรับสลับหน้าจอระหว่าง `'dashboard'` กับ `'applications'` และห่อหน้าจอด้วย `<AppShell>`
+
+## หน้าจอและคอมโพเนนต์หลัก
+
+หน้า Dashboard อยู่ใน `frontend/src/pages/dashboard-page.tsx`
+
+- `<StatCard>` แสดงตัวเลขสถิติ เช่น จำนวนงานที่สมัครและงานที่อยู่ระหว่างสัมภาษณ์
+- `<InsightsSummary>` สรุปภาพรวมการสมัครงาน
+- `<RecentApplications>` แสดงรายการสมัครงานล่าสุด
+
+หน้า Applications อยู่ใน `frontend/src/pages/applications-page.tsx`
+
+- `<AddApplicationDialog>` เป็นหน้าต่างฟอร์มสำหรับเพิ่มรายการสมัครงาน
+- `<ApplicationTable>` แสดงรายการแบบตาราง
+- `<ApplicationCard>` แสดงรายการแบบการ์ด
+- `<ApplicationStatusBadge>` แสดงสีตามสถานะของงาน
+
+โครงเลย์เอาต์อยู่ใน `frontend/src/components/layout/`
+
+- `app-shell.tsx`, `app-header.tsx`, `app-sidebar.tsx` และ `mobile-nav.tsx` จัดกรอบแอป แถบด้านข้าง และเมนูบนจอเล็ก
+
+## ข้อมูลจัดเก็บอยู่ที่ไหน
+
+- `frontend/src/data/mock-applications.ts` เก็บรายการสมัครงานจำลองชื่อ `mockApplications`
+- `frontend/src/data/mock-dashboard.ts` เก็บสถิติภาพรวมชื่อ `mockDashboardStats`
+- `frontend/src/lib/types.ts` กำหนดชนิด `Application`, `ApplicationStatus` และ `DashboardStats`
+
+## จุดที่เรียก Backend
+
+::: info ผลการตรวจซอร์สโค้ด
+ฝั่ง Frontend ใช้ข้อมูลจำลองจาก `frontend/src/data/mock-applications.ts` ยังไม่พบฟังก์ชัน `fetch` หรือตัวเรียก HTTP ที่ส่งคำขอไปยัง Backend
 :::
 
-## หน้านี้จะตอบอะไร เมื่อมีซอร์สโค้ดแล้ว
+## บทเรียนในส่วนนี้
 
-- แอปเริ่มเรนเดอร์จากไฟล์ใด
-- แต่ละหน้าจอถูกแยกเป็นคอมโพเนนต์อย่างไร
-- ฟอร์มหรือรายการบนหน้าจอเก็บข้อมูลไว้ที่ไหน
-- จุดใดส่งคำขอออกไปหา Backend
+- [ฟอร์มบันทึกการสมัครงานใหม่](/projects/job-application-tracker/frontend/add-application-dialog)
+- [การกรองข้อมูลรายการสมัครงาน](/projects/job-application-tracker/frontend/applications-state-and-filtering)
 
-## สิ่งที่ควรอ่านคู่กัน
+## อ่านต่อ
 
-ก่อนเปิดไฟล์ React ถ้าคำว่าคอมโพเนนต์หรือ JSX ยังใหม่ ให้อ่าน [React Basics](/fundamentals/react/) ก่อน
-
-เมื่อเจอโค้ดจริง ให้คัดลอกโครงจาก `templates/code-explanation.md` มาวางเป็นบทเรียนใหม่ใต้โฟลเดอร์นี้ แล้วเติมชื่อไฟล์กับคำอธิบายจากโค้ดนั้น
-
-## หน้าถัดไปในโปรเจค
-
+- [ภาพรวมโปรเจค](/projects/job-application-tracker/)
 - [Backend](/projects/job-application-tracker/backend/)
 - [การทำงานร่วมกันของระบบ](/projects/job-application-tracker/architecture)
-- [ภาพรวมโปรเจค](/projects/job-application-tracker/)
+- [React Basics](/fundamentals/react/)

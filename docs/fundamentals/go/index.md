@@ -40,7 +40,7 @@ func main() {
 | `func` | การประกาศฟังก์ชัน |
 | `:=` | สร้างตัวแปรใหม่พร้อมใส่ค่า |
 
-Backend ของโปรเจคใช้เฟรมเวิร์ก Gin เพิ่มจากภาษา Go ธรรมดา Gin ช่วยรับคำขอจากหน้าเว็บ รายละเอียดเส้นทางจริงยังอยู่ที่ [Backend](/projects/job-application-tracker/backend/) ซึ่งยังเป็นโครงบทเรียน
+Backend ของโปรเจคใช้ไลบรารีมาตรฐาน `net/http` ไม่ได้ใช้เฟรมเวิร์กเพิ่ม เส้นทางที่มีในตอนนี้คือ `GET /health` อ่านได้ที่ [Backend](/projects/job-application-tracker/backend/)
 
 ## อ่านต่อ
 
